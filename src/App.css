@@ -1,0 +1,92 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    background-color: rgb(0, 0, 0);
+}
+
+.banner {
+    background-image: url('../public/assets/gallery1.jpg');
+    background-size: cover;
+}
+
+.top-grad {
+    background-image: black;
+}
+
+/* hover:nav-hover {
+    color: #24cf1e;
+} */
+
+/* FONTS */
+.lora {
+    font-family: "Lora", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+.bona-nova {
+    font-family: "Bona Nova SC", serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.deja-vu {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.prata {
+    font-family: "Prata", serif;
+    font-weight: 550;
+    font-style: normal;
+}
+
+.banner-image {
+    background-image: url('../public/assets/gallery1.jpg')
+}
+
+.trans {
+    transition: 0.15s;
+}
+
+/* CSS FOR LOGIN PAGE */
+.login-box {
+    width: 500px;
+    height: 600px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px #006302;
+  }
+  
+  .register-box {
+    width: 500px;
+    height: 700px;
+    border-radius: 25px;
+    box-shadow: 1px 1px 1px 1px #006302;
+  }
+
+/* LOADING ANIMATION */
+.dot {
+    animation: pulse 1.5s infinite;
+}
+
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+}
