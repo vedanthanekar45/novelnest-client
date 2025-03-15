@@ -15,6 +15,7 @@ dist-ssr
 client_id.json
 .env
 .vite
+oauth_client.json
 
 # Editor directories and files
 .vscode/*
