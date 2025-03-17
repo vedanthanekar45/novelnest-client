@@ -17,6 +17,9 @@ client_id.json
 .vite
 oauth_client.json
 
+**/__pycache__/
+**/migrations/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
