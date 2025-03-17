@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.hashers import make_password
+from rest_framework.decorators import api_view
 from rest_framework import status, serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -24,38 +25,43 @@ class Userserializer (serializers.Serializer):
     full_name = serializers.CharField(max_length=100)
     email = serializers.EmailField()
     username = serializers.CharField(max_length=20)
-    password = serializers.CharField(max_length=20)
-    is_verified = serializers.BooleanField()
+    password = serializers.CharField()
+    is_verified = serializers.BooleanField(default=False)
 
 # Authentication Views
-
+@api_view(['POST'])
 def register (request):
     if request.method == 'POST':
         serializer = Userserializer(data=request.data)
+
         if serializer.is_valid():
             s_full_name = serializer.validated_data['full_name']
             s_email = serializer.validated_data['email']
             s_username = serializer.validated_data['username']
             s_password = serializer.validated_data['password']
-            s_is_verified = serializer.validated_data['is_verified']
 
-            try:
-                user = User.objects.get(username=s_username) 
-                # Here, the first username parameter is from the model and the second username
-                # is from the serializer variable
-                if (user):    # If the user exists
-                    return Response({
+            if User.objects.filter(username=s_username).exists():
+                return Response({
                         "error": "User already exists!"
                     }, status=status.HTTP_400_BAD_REQUEST)
-            except:
-                hashed_password = make_password(s_password)
+            
+            hashed_password = make_password(s_password)
+            database_user = User.objects.create(full_name=s_full_name, email=s_email, username=s_username, password=hashed_password, is_verified=False)
+            database_user.save()
 
-                database_user = User.objects.create(full_name=s_full_name, email=s_email, username=s_username, password=hashed_password, is_verified=s_is_verified)
-                database_user.save()
+            # Generate Tokens
+            refresh = RefreshToken()
+            access = str(refresh.access_token)
 
-                return Response({
-                    "message": "User created successfully!"
-                }, status=status.HTTP_201_CREATED)
+            return Response({
+                "message": "User created successfully!",
+                "access": access,
+                "refresh": str(refresh)
+            }, status=status.HTTP_201_CREATED)
+
+        return Response({"error": "error doing this shit"}, status=status.HTTP_400_BAD_REQUEST)
+            
+
 
 class LogoutView (APIView):
     permission_classes = (IsAuthenticated, )

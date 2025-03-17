@@ -26,16 +26,18 @@ function Register() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [usernameExists, setUsernameExists] = React.useState(false);
 
-    const handleSubmit = async (e): Promise<void> => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true)
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/register/', {
-                fullName,
+            const response = await axios.post('http://127.0.0.1:8000/register/', {
+                full_name: fullName,
                 email,
                 username,
                 password,
             });
+
+            console.log(response.data)
             
             const token = response.data.token;
             localStorage.setItem('authtoken', token)
@@ -43,13 +45,13 @@ function Register() {
                 console.log('Registration successful:', response.data);
                 console.log("Token saved: ", token);
                 alert('Registration successful! Sending to One Time Password to your email and redirecting to verification...');
-                await sendOtp(email)
-                navigate('/otp', { state: { isFromRegistration: true, email } }); // Redirect to homepage
+                // await sendOtp(email)
+                // navigate('/otp', { state: { isFromRegistration: true, email } }); // Redirect to homepage
               }
         } catch (error) {
-            if (error.status === 400) {
-                setUsernameExists(true)
-            }
+            // if (error) {
+            //     setUsernameExists(true)
+            // }
             console.error('Registration error:', error);
         } finally {
             setIsLoading(false)
@@ -95,7 +97,7 @@ function Register() {
                         disabled={isLoading}>
                             {isLoading ? <LoadingDots />: "Register"}
                         </button>
-                        {usernameExists ? ( <div className="prata flex justify-center z-2 text-red-600 text-xl mt-6">
+                        {usernameExists ? ( <div className="prata flex justify-center z-2 text-red-400 text-xl mt-6">
                             <h1>User is already registered!</h1>
                         </div>) : (<></>)}
                     </form>
