@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from rest_framework.decorators import api_view
 from rest_framework import status, serializers
@@ -60,9 +61,29 @@ def register (request):
             }, status=status.HTTP_201_CREATED)
 
         return Response({"error": "error doing this shit"}, status=status.HTTP_400_BAD_REQUEST)
-            
 
+# Login View
+@api_view(['POST'])
+def Login_view (request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+    
+    user = authenticate(request, username=username, password=password)
+    print(user)
 
+    if user is not None:
+        refresh = RefreshToken.for_user(user)
+        access = str(refresh.access_token)
+
+        return Response({
+            'message': 'Login successful',
+            'access': access,
+            'refresh': str(refresh),
+        }, status=status.HTTP_200_OK)
+
+    return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+# Logout View
 class LogoutView (APIView):
     permission_classes = (IsAuthenticated, )
     def post (self, request):
