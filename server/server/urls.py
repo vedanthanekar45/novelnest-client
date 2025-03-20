@@ -16,6 +16,6 @@ urlpatterns = [
          name="token_refresh"),
 
      path('', include('userauth.urls')),
-     path('books/', include('books.urls'))
+     path('search/', include('books.urls'))
 
 ]
