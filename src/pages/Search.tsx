@@ -28,7 +28,7 @@ export default function Search () {
             setIsLoading(true);
             if (!searchQuery) return;
             try {
-                const response = await fetch(`http://127.0.0.1:8000/api/search-books/?q=${query}`);
+                const response = await fetch(`http://127.0.0.1:8000/search/?query=${query}`);
                 const data = await response.json();
                 setBooks(data.items || []);
             } catch (error) {
