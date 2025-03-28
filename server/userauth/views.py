@@ -1,13 +1,12 @@
-from django.shortcuts import render
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 from rest_framework.decorators import api_view
-from rest_framework import status, serializers
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from .models import *
 
 # Create your views here.
 
@@ -20,47 +19,44 @@ class HomeView (APIView):
         }
         return Response(content)
     
-# Defining serializers
-# Serializers help convert anything like a queryset into python data variables
-class Userserializer (serializers.Serializer):
-    full_name = serializers.CharField(max_length=100)
-    email = serializers.EmailField()
-    username = serializers.CharField(max_length=20)
-    password = serializers.CharField()
-    is_verified = serializers.BooleanField(default=False)
 
 # Authentication Views
 @api_view(['POST'])
 def register (request):
     if request.method == 'POST':
-        serializer = Userserializer(data=request.data)
+        s_full_name = request.data.get('full_name')
+        s_email = request.data.get('email')
+        s_username = request.data.get('username')
+        s_password = request.data.get('password')
 
-        if serializer.is_valid():
-            s_full_name = serializer.validated_data['full_name']
-            s_email = serializer.validated_data['email']
-            s_username = serializer.validated_data['username']
-            s_password = serializer.validated_data['password']
-
-            if User.objects.filter(username=s_username).exists():
-                return Response({
-                        "error": "User already exists!"
-                    }, status=status.HTTP_400_BAD_REQUEST)
-            
-            hashed_password = make_password(s_password)
-            database_user = User.objects.create(full_name=s_full_name, email=s_email, username=s_username, password=hashed_password, is_verified=False)
-            database_user.save()
-
-            # Generate Tokens
-            refresh = RefreshToken()
-            access = str(refresh.access_token)
-
+        if User.objects.filter(username=s_username).exists():
             return Response({
-                "message": "User created successfully!",
-                "access": access,
-                "refresh": str(refresh)
-            }, status=status.HTTP_201_CREATED)
+                    "error": "User already exists!"
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+        if User.objects.filter(email=s_email).exists():
+            return Response({
+                    "error": "Email is already registered!"
+                }, status=status.HTTP_400_BAD_REQUEST)
+            
+        database_user = User.objects.create_user(
+            last_name=s_full_name, 
+            email=s_email, 
+            username=s_username, 
+            password=s_password)
+        database_user.save()
 
-        return Response({"error": "error doing this shit"}, status=status.HTTP_400_BAD_REQUEST)
+        # Generate Tokens
+        refresh = RefreshToken()
+        access = str(refresh.access_token)
+
+        return Response({
+            "message": "User created successfully!",
+            "access": access,
+            "refresh": str(refresh)
+        }, status=status.HTTP_201_CREATED)
+
+    return Response({"error": "error doing this shit"}, status=status.HTTP_400_BAD_REQUEST)
 
 # Login View
 @api_view(['POST'])
@@ -96,5 +92,3 @@ class LogoutView (APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-    
-
