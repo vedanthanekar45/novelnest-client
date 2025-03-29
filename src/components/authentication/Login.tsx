@@ -2,12 +2,12 @@ import React from "react"
 import axios from 'axios'
 import { useAuth } from "../../auth/useAuth";
 import LoadingDots from "../animations/LoadingDots";
-import { getCsrfToken } from "../../auth/getCSRF";
 import { useNavigate } from "react-router-dom";
-import { fetchUserData } from "../../auth/fetchUserData";
+import api from "../../auth/api";
 
 function Login() {
     const navigate = useNavigate();
+    const { setAccessToken } = useAuth();
     const { setUser, loggedIn, setLoggedIn } = useAuth();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -16,24 +16,14 @@ function Login() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
-        // await login(username, password);
         try {
-            const csrfToken = await getCsrfToken();
-            if (!csrfToken) {
-                console.error('Failed to get CSRF token');
-                return;
+            const response = await api.post('/login/', {username, password}, {withCredentials: true});
+            if (response.status === 200) {
+                setLoggedIn(true);
+                setAccessToken(response.data.access); // Update access token state
+                navigate('/'); // Redirect to homepage
             }
-            await axios.post('http://127.0.0.1:8000/api/login/', {
-                username,
-                password,
-            }, {
-                headers: {
-                    'X-CSRFToken': csrfToken,
-                    'Content-Type': 'application/json',
-                }, withCredentials: true
-            });
-            const user = await fetchUserData();
-            setUser(user);
+
             setLoggedIn(true);
             // After successful login, redirect to homepage
             navigate('/')
