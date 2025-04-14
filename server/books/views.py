@@ -21,3 +21,13 @@ def search (request):
         return JsonResponse(data)
     else:
         return JsonResponse({"error": "Failed to get data from Google Books"}, status=500)
+
+def get_book_details (book_id):
+    response = requests.get(f"https://www.googleapis.com/books/v1/volumes?q={book_id}")
+    if response.status_code == 200:
+        print(response)
+        return JsonResponse(response.json())
+    else :
+        JsonResponse({"error": "Book not found"}, status=404)
+
+

@@ -12,6 +12,7 @@ import JournalPage from './components/journal/journalPage'
 import CreateJournal from './components/journal/createJournal'
 import { useAuth } from './auth/useAuth'
 import Search from './pages/Search'
+import BookInfo from './pages/BookInfo'
 
 function App() {
 
@@ -34,13 +35,13 @@ function App() {
     <div>
       <Routes>
         <Route path='/' element={<Homepage />} />
-        {/* <Route path='/genre' element={<GenrePage />} /> */}
         <Route path='/signin' element={<Login/>} />
         <Route path='/signup' element={<Register />} />
         <Route path='/otp'  element={<Otpverify />} />
         <Route path='/journal' element={<JournalPage />} />
         <Route path='/createjournal' element={loggedIn ? <Navigate to='/signin' /> : <CreateJournal />} />
         <Route path='/searchbooks' element={<Search />} />
+        <Route path='/book/:id' element={<BookInfo />} />
       </Routes>
     </div>
   )
