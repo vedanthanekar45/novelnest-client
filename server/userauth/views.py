@@ -1,7 +1,8 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from rest_framework.decorators import api_view
+from django.http import JsonResponse
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -50,11 +51,15 @@ def register (request):
         refresh = RefreshToken()
         access = str(refresh.access_token)
 
-        return Response({
-            "message": "User created successfully!",
-            "access": access,
-            "refresh": str(refresh)
-        }, status=status.HTTP_201_CREATED)
+        response = JsonResponse({"message": "Registration successful"})
+        response.set_cookie(
+                key='access_token',
+                value=access,
+                httponly=True,
+                samesite='Lax',
+                secure=False,
+            )
+        return response
 
     return Response({"error": "error doing this shit"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -71,11 +76,16 @@ def Login_view (request):
         refresh = RefreshToken.for_user(user)
         access = str(refresh.access_token)
 
-        return Response({
-            'message': 'Login successful',
-            'access': access,
-            'refresh': str(refresh),
-        }, status=status.HTTP_200_OK)
+        response = JsonResponse({"message": "Login successful"})
+        response.set_cookie(
+                key='access_token',
+                value=access,
+                httponly=True,
+                samesite='Lax',
+                secure=False,
+            )
+        return response
+        
 
     return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -92,3 +102,8 @@ class LogoutView (APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_auth(request):
+    return Response({'message': 'User is authenticated', 'user': request.user.username})

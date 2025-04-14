@@ -1,6 +1,6 @@
-import pic1 from "/public/assets/gallery6.jpg"
-import pic2 from "/public/assets/gallery2.jpg"
-import pic3 from "/public/assets/gallery3.jpg"
+import pic1 from "/assets/gallery6.jpg"
+import pic2 from "/assets/gallery2.jpg"
+import pic3 from "/assets/gallery3.jpg"
 
 export default function Journals () {
     return (

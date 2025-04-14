@@ -1,5 +1,4 @@
 import React from "react"
-import axios from 'axios'
 import { useAuth } from "../../auth/useAuth";
 import LoadingDots from "../animations/LoadingDots";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import api from "../../auth/api";
 function Login() {
     const navigate = useNavigate();
     const { setAccessToken } = useAuth();
-    const { setUser, loggedIn, setLoggedIn } = useAuth();
+    const { loggedIn, setLoggedIn } = useAuth();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
@@ -20,12 +19,10 @@ function Login() {
             const response = await api.post('/login/', {username, password}, {withCredentials: true});
             if (response.status === 200) {
                 setLoggedIn(true);
-                setAccessToken(response.data.access); // Update access token state
-                navigate('/'); // Redirect to homepage
+                setAccessToken(response.data.access); 
+                navigate('/');
             }
-
             setLoggedIn(true);
-            // After successful login, redirect to homepage
             navigate('/')
         } catch (error) {
             setLoggedIn(false);         

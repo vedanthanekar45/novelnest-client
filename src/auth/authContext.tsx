@@ -1,4 +1,5 @@
-import { createContext, useState, ReactNode} from 'react'
+import { createContext, useState, ReactNode, useEffect} from 'react'
+import api from './api';
 import axios from 'axios'
 
 interface User {
@@ -23,6 +24,20 @@ export const AuthProvider = ({ children } : { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loggedIn, setLoggedIn] = useState(false)
     const [accessToken, setAccessToken] = useState<string | null>(null);
+
+    useEffect(() => {
+        const checkAuth = async () => {
+          try {
+            const res = await api.get("/check-auth"); // `withCredentials: true` is already set globally
+            setLoggedIn(true);
+            setUser(res.data.user);
+          } catch (err) {
+            setLoggedIn(false);
+          }
+        };
+      
+        checkAuth();
+      }, []);
     
     const logout = async () => {
         setUser(null)

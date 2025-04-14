@@ -1,4 +1,6 @@
 import './App.css'
+import api from './auth/api'
+import React from 'react'
 import Login from './components/authentication/Login'
 import Register from './components/authentication/Register'
 // import GenrePage from './pages/genres'
@@ -13,7 +15,20 @@ import Search from './pages/Search'
 
 function App() {
 
-  const { loggedIn } = useAuth();
+  const { loggedIn, setLoggedIn, setUser } = useAuth();
+  React.useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await api.get("/check-auth");
+        setLoggedIn(true);
+        setUser(res.data.user);
+      } catch (err) {
+        setLoggedIn(false);
+      }
+    };
+  
+    checkAuth();
+  }, []);
   
   return (
     <div>
