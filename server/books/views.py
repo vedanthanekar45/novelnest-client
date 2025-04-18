@@ -6,6 +6,8 @@ from os import getenv
 import requests
 from .models import bookLogData
 
+
+
 def search (request):
     load_dotenv()
     query = request.GET.get('query')
@@ -25,10 +27,15 @@ def search (request):
         return JsonResponse({"error": "Failed to get data from Google Books"}, status=500)
 
 
+
+# View to create a log
 @api_view(['POST'])
+# IsAuthenticated() ensures the data goes in only when the user is logged in
 @permission_classes([IsAuthenticated])
 def log_book (request):
     data = request.data
+
+    # I've used get_or_create in order to not create a duplicate entry of the log
     created = bookLogData.objects.get_or_create(
         user = request.user,
         book_id = data['google_book_id'],
