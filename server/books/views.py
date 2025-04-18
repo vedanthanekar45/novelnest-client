@@ -5,14 +5,21 @@ from dotenv import load_dotenv
 from os import getenv
 import requests
 from .models import bookLogData
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 
 def search (request):
+
     load_dotenv()
     query = request.GET.get('query')
+
     if not query:
-        return JsonResponse({"error": "Query parameter is required"}, status=400)
+        return JsonResponse({
+            "error": "Query parameter is required"
+        }, status=400)
     
     api_key = getenv("BOOKS_API_KEY")
     url = f"https://www.googleapis.com/books/v1/volumes?q={query}&key={api_key}"
@@ -24,7 +31,9 @@ def search (request):
         data = response.json()
         return JsonResponse(data)
     else:
-        return JsonResponse({"error": "Failed to get data from Google Books"}, status=500)
+        return JsonResponse({
+            "error": "Failed to get data from Google Books"
+        }, status=500)
 
 
 
@@ -33,6 +42,7 @@ def search (request):
 # IsAuthenticated() ensures the data goes in only when the user is logged in
 @permission_classes([IsAuthenticated])
 def log_book (request):
+
     data = request.data
 
     # I've used get_or_create in order to not create a duplicate entry of the log
@@ -49,6 +59,49 @@ def log_book (request):
     )
 
     if not created:
-        return JsonResponse({'message': 'Already logged this book'}, status=400)
+        return JsonResponse({
+            'message': 'Already logged this book'
+        }, status=400)
 
-    return JsonResponse({'message': 'Book logged successfully!'})
+    return JsonResponse({
+        'message': 'Book logged successfully!'
+    })
+
+
+# Get the books that the user has logged to their profile
+@api_view(['GET'])
+def get_user_books (request, username):
+
+    user = User.objects.get(username=username)
+    logs = bookLogData.objects.filter(user=user).order_by('logged_time')
+
+    if not logs:
+        return JsonResponse({
+            'message': 'No books logged currently'
+        }, status=400)
+
+    return JsonResponse(logs, status=200)
+
+@api_view(['GET'])
+# Count how many times the book has been logged for each category
+def count_book_logs (request):
+
+    # Getting the book id
+    book_id = request.GET.get('id')
+
+    # Counting how many times and how the users have interacted with the book
+
+    to_be_read_count = bookLogData.objects.filter(book_id=book_id, status='to_be_read').count()
+    currently_reading_count = bookLogData.objects.filter(book_id=book_id, status='currently_reading').count()
+    completed_count = bookLogData.objects.filter(book_id=book_id, status='completed').count()
+
+    if not to_be_read_count or not currently_reading_count or not completed_count:
+        return JsonResponse({
+            'message': 'There has been an error'
+        }, status=400)
+    
+    return JsonResponse ({
+        'to_be_read': to_be_read_count,
+        'currently_reading': currently_reading_count,
+        'completed': completed_count,
+    }, status=200)
