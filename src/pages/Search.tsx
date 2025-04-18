@@ -1,6 +1,7 @@
 import Banner from "../components/homepage/Banner"
 import Navbar from "../components/navigation/Navbar"
 import Footer from "../components/homepage/Footer"
+import { Link } from "react-router-dom"
 import React from 'react'
 
 type bookType = {
@@ -22,7 +23,6 @@ export default function Search () {
     const [isLoading, setIsLoading] = React.useState(true)
     const [query, setQuery] = React.useState('');
     const [books, setBooks] = React.useState<bookType[]>([]);
-    // const controller = new AbortController();
     
         const searchBooks = async (searchQuery: string) => {
             setIsLoading(true);
@@ -74,21 +74,23 @@ export default function Search () {
                     <ul className="text-white">
                         {books.map((book) => (
                             <li key={book.id}>
-                                <hr className="w-[1100px] mx-auto mb-8 mt-8 border-gray-700" />
-                                <div className="flex items-start mb-8">
-                                    <img 
-                                        src={book.volumeInfo.imageLinks?.thumbnail} 
-                                        alt={book.volumeInfo.title} 
-                                        className="w-[150px]"
-                                    />
-                                    <div className="ml-20 mt-4">
-                                        <h3 className="text-3xl prata hover:text-green-600">{book.volumeInfo.title}</h3>
-                                        <p className="prata mt-2 text-xl text-gray-400 hover:underline">{book.volumeInfo.authors?.join(', ')}</p>
-                                        <p className="prata mt-4 text-xl text-gray-400">{book.volumeInfo.publishedDate}</p>
-                                        <p className="prata mt-4 text-xl text-gray-400">{book.volumeInfo.categories}</p>
-                                        <p className="prata mt-4 text-xl text-gray-400">{truncateText(book.volumeInfo.description || '', 95)}</p>
+                                <Link to={`/book/${book.id}`}>
+                                    <hr className="w-[1100px] mx-auto mb-8 mt-8 border-gray-700" />
+                                    <div className="flex items-start mb-8">
+                                        <img 
+                                            src={book.volumeInfo.imageLinks?.thumbnail} 
+                                            alt={book.volumeInfo.title} 
+                                            className="w-[150px]"
+                                        />
+                                        <div className="ml-20 mt-4">
+                                            <h3 className="text-3xl prata hover:text-green-600">{book.volumeInfo.title}</h3>
+                                            <p className="prata mt-2 text-xl text-gray-400 hover:underline">{book.volumeInfo.authors?.join(', ')}</p>
+                                            <p className="prata mt-4 text-xl text-gray-400">{book.volumeInfo.publishedDate}</p>
+                                            <p className="prata mt-4 text-xl text-gray-400">{book.volumeInfo.categories}</p>
+                                            <p className="prata mt-4 text-xl text-gray-400">{truncateText(book.volumeInfo.description || '', 95)}</p>
+                                        </div>
                                     </div>
-                                </div>
+                                </Link>
                             </li>
                         ))}
                     </ul>
