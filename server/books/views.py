@@ -90,15 +90,9 @@ def count_book_logs (request):
     book_id = request.GET.get('id')
 
     # Counting how many times and how the users have interacted with the book
-
     to_be_read_count = bookLogData.objects.filter(book_id=book_id, status='to_be_read').count()
     currently_reading_count = bookLogData.objects.filter(book_id=book_id, status='currently_reading').count()
     completed_count = bookLogData.objects.filter(book_id=book_id, status='completed').count()
-
-    if not to_be_read_count or not currently_reading_count or not completed_count:
-        return JsonResponse({
-            'message': 'There has been an error'
-        }, status=400)
     
     return JsonResponse ({
         'to_be_read': to_be_read_count,
