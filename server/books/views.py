@@ -1,4 +1,3 @@
-from rest_framework.response import Response
 from django.http import JsonResponse
 from dotenv import load_dotenv
 from os import getenv
@@ -21,3 +20,4 @@ def search (request):
         return JsonResponse(data)
     else:
         return JsonResponse({"error": "Failed to get data from Google Books"}, status=500)
+    
