@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 
-# Create your views here.
+
 
 class HomeView (APIView):
 
@@ -20,6 +20,7 @@ class HomeView (APIView):
         }
         return Response(content)
     
+
 
 # Authentication Views
 @api_view(['POST'])
@@ -63,6 +64,8 @@ def register (request):
 
     return Response({"error": "error doing this shit"}, status=status.HTTP_400_BAD_REQUEST)
 
+
+
 # Login View
 @api_view(['POST'])
 def Login_view (request):
@@ -89,6 +92,9 @@ def Login_view (request):
 
     return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
+
+
+
 # Logout View
 class LogoutView (APIView):
     permission_classes = (IsAuthenticated, )
@@ -102,8 +108,21 @@ class LogoutView (APIView):
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        
+
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def check_auth(request):
     return Response({'message': 'User is authenticated', 'user': request.user.username})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+
+def get_user_details (request):
+
+    data = request.data
+
+    user = User.objects.get(username=data.username)
+    

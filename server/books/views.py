@@ -99,3 +99,26 @@ def count_book_logs (request):
         'currently_reading': currently_reading_count,
         'completed': completed_count,
     }, status=200)
+
+
+@api_view(['GET'])
+def get_book_details (request):
+
+    load_dotenv()
+
+    id = request.GET.get('id')
+    api_key = getenv("BOOKS_API_KEY")
+    url = f"https://www.googleapis.com/books/v1/volumes/{id}?key={api_key}"
+
+    response = requests.get(url)
+    print(response)
+
+    if response.status_code == 200:
+        data = response.json()
+        return JsonResponse(data)
+    else:
+        return JsonResponse({
+            "error": "Failed to get data from Google Books"
+        }, status=500)
+
+
