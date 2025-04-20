@@ -117,12 +117,15 @@ def check_auth(request):
     return Response({'message': 'User is authenticated', 'user': request.user.username})
 
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-
-def get_user_details (request):
-
-    data = request.data
-
-    user = User.objects.get(username=data.username)
+def get_user_data (request):
+    user = request.user
+    return JsonResponse({
+        'id': user.id,
+        'full_name': user.get_full_name(),
+        'username': user.username,
+        'email': user.email,
+    })
     

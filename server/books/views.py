@@ -120,5 +120,3 @@ def get_book_details (request):
         return JsonResponse({
             "error": "Failed to get data from Google Books"
         }, status=500)
-
-
