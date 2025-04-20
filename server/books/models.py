@@ -3,9 +3,10 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()   # Using Django's in built user model
 
+
+
 # Model where the all the book logging data is stored 
 class bookLogData (models.Model):
-
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book_id = models.CharField(max_length=20)   # book_id comes from the Google Books API
     title = models.CharField(max_length=255)
@@ -29,3 +30,16 @@ class bookLogData (models.Model):
     ])    #  Letterboxd style rating system
     notes = models.TextField(null=True, blank=True)
     logged_time = models.DateTimeField(auto_now_add=True)
+
+
+
+# Model for User created Shelves. A user created list is called a shelf here.
+class userShelves (models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shelves')
+    shelfTitle = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    booklog = models.ManyToManyField('bookLogData', related_name='shelves')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__ (self):
+        return f"{self.name} (by {self.user.username})"
