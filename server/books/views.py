@@ -130,7 +130,7 @@ def create_shelf (request):
     shelf_title = data['title']
     shelf_description = data['description']
 
-    shelf, created = userShelf.objects.get_or_create(user=request.user, shelfTitle=shelf_title, description=shelf_description)
+    shelf = userShelf.objects.get_or_create(user=request.user, shelfTitle=shelf_title, description=shelf_description)
 
     return JsonResponse({
         'message': "Shelf created successfully."
@@ -151,7 +151,8 @@ def add_book_to_shelf (request):
     title = data['volumeInfo']['title']
     thumbnail = data['volumeInfo'].get('imageLinks', {}).get('thumbnail', '')
 
-    shelf_id = userShelf.objects.get(id)
+    s_id = request.GET.get('shelf_id')
+    shelf_id = userShelf.objects.get(id=s_id)
     shelfbook = ShelfBook.objects.create(shelf=shelf_id, book_id=book_id, title=title, 
                                          thumbnail_url=thumbnail)
     shelfbook.save()
