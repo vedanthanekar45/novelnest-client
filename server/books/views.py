@@ -99,7 +99,6 @@ def count_book_logs (request):
         'completed': completed_count,
     }, status=200)
 
-
 @api_view(['GET'])
 def get_book_details (request):
     load_dotenv()
