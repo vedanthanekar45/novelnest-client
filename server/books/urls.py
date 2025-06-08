@@ -2,11 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-<<<<<<< HEAD
     path('search/', views.search, name="search"),
-    path('bookinfo/<str:book_id>/', views.get_book_details, name="bookinfo")
-=======
-    
+    path('bookinfo/<str:book_id>/', views.get_book_details, name="bookinfo"),
+        
     # search url path
     path('search/', views.search, name="search"),
 
@@ -19,5 +17,4 @@ urlpatterns = [
     # user shelf related paths
     path('create_shelf/', views.create_shelf, name="create_shelf"),
     path('add_book_to_shelf/', views.add_book_to_shelf, name="add_book_to_shelf"),
->>>>>>> api
 ]

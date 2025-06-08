@@ -30,7 +30,6 @@ def search (request):
         data = response.json()
         return JsonResponse(data)
     else:
-<<<<<<< HEAD
         return JsonResponse({"error": "Failed to get data from Google Books"}, status=500)
 
 def get_book_details (book_id):
@@ -42,7 +41,6 @@ def get_book_details (book_id):
         JsonResponse({"error": "Book not found"}, status=404)
 
 
-=======
         return JsonResponse({
             "error": "Failed to get data from Google Books"
         }, status=500)
@@ -173,4 +171,3 @@ def add_book_to_shelf (request):
     return JsonResponse({
         'message': "Book successfully added to shelf."
     }, status=200)
->>>>>>> api
