@@ -1,5 +1,4 @@
-import { createContext, useState, ReactNode, useEffect} from 'react'
-import api from './api';
+import { createContext, useState} from 'react'
 import axios from 'axios'
 
 interface User {
@@ -19,8 +18,9 @@ interface AuthContextType {
 };
 
 export const AuthContext = createContext<AuthContextType | null>(null);
+// export const AuthContext = createContext({})
 
-export const AuthProvider = ({ children } : { children: ReactNode }) => {
+export const AuthProvider = ({ children }: any) => {
     const [user, setUser] = useState<User | null>(null);
     const [loggedIn, setLoggedIn] = useState(false)
     const [accessToken, setAccessToken] = useState<string | null>(null);

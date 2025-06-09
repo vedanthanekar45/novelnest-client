@@ -2,7 +2,6 @@ import React from "react"
 import { useAuth } from "../../auth/useAuth";
 import LoadingDots from "../animations/LoadingDots";
 import { useNavigate } from "react-router-dom";
-// import api from "../../auth/api";
 import axios from "axios";
 
 function Login() {

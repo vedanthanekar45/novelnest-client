@@ -17,7 +17,6 @@ export default function BookInfo() {
 
   const { id } = useParams();
   const [book, setBook] = useState<bookType | null>(null);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBookDetails = async () => {
@@ -26,8 +25,8 @@ export default function BookInfo() {
         if (!response.ok) throw new Error("Failed to fetch book details");
         const data = await response.json();
         setBook(data.items ? data.items[0] : data);
-      } catch (error) {
-        setError(error.message);
+      } catch (error: any) {
+        console.log(error.message);
       }
     };
     fetchBookDetails();
