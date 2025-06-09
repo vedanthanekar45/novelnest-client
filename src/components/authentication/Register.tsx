@@ -1,23 +1,23 @@
 import React from "react"
 import axios from "axios";
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 import LoadingDots from "../animations/LoadingDots";
 
-const sendOtp = async (email: string) => {
-    try {
-        const response = await axios.post('http://127.0.0.1:8000/api/send-otp/', {email}, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        console.log(response.data.messsage);
-    } catch (error) {
-        console.error(error.response?.data?.error || 'Error sending OTP');
-    }
-}
+// const sendOtp = async (email: string) => {
+//     try {
+//         const response = await axios.post('http://127.0.0.1:8000/api/send-otp/', {email}, {
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         });
+//         console.log(response.data.messsage);
+//     } catch (error: any) {
+//         console.error(error.response?.data?.error || 'Error sending OTP');
+//     }
+// }
 
 function Register() {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [fullName, setFullName] = React.useState('');
     const [email, setEmail] = React.useState('');
@@ -26,7 +26,7 @@ function Register() {
     const [isLoading, setIsLoading] = React.useState(false);
     const [usernameExists, setUsernameExists] = React.useState(false);
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
         setIsLoading(true)
         try {
@@ -44,14 +44,14 @@ function Register() {
             if (response.status === 201 || response.status === 200) {
                 console.log('Registration successful:', response.data);
                 console.log("Token saved: ", token);
-                alert('Registration successful! Sending to One Time Password to your email and redirecting to verification...');
+                alert('Registration successful!');
                 // await sendOtp(email)
                 // navigate('/otp', { state: { isFromRegistration: true, email } }); // Redirect to homepage
               }
         } catch (error) {
-            // if (error) {
-            //     setUsernameExists(true)
-            // }
+            if (error) {
+                setUsernameExists(true)
+            }
             console.error('Registration error:', error);
         } finally {
             setIsLoading(false)

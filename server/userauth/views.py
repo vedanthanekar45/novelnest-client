@@ -71,8 +71,8 @@ def register (request):
 def Login_view (request):
     username = request.data.get("username")
     password = request.data.get("password")
-    hashed_password = make_password(password)
-    user = authenticate(request, username=username, password=hashed_password)
+    # hashed_password = make_password(password)
+    user = authenticate(request, username=username, password=password)
     print(user)
 
     if user is not None:

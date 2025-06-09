@@ -53,7 +53,7 @@ export default function Otpverify() {
             });
             console.log(response.data.messsage);
             alert("OTP Sent")
-        } catch (error) {
+        } catch (error: any) {
             console.error(error.response?.data?.error || 'Error sending OTP');
         }
     }
