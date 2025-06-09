@@ -1,5 +1,6 @@
 import React from "react"
 import axios from "axios";
+// import api from "../../auth/api";
 // import { useNavigate } from 'react-router-dom'
 import LoadingDots from "../animations/LoadingDots";
 
@@ -35,7 +36,7 @@ function Register() {
                 email,
                 username,
                 password,
-            });
+            }, {withCredentials: true});
 
             console.log(response.data)
             

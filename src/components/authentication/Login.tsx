@@ -2,7 +2,8 @@ import React from "react"
 import { useAuth } from "../../auth/useAuth";
 import LoadingDots from "../animations/LoadingDots";
 import { useNavigate } from "react-router-dom";
-import api from "../../auth/api";
+// import api from "../../auth/api";
+import axios from "axios";
 
 function Login() {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ function Login() {
         e.preventDefault();
         setIsLoading(true);
         try {
-            const response = await api.post('/login/', {username, password}, {withCredentials: true});
+            const response = await axios.post('http://127.0.0.1:8000/login/', {username, password}, {withCredentials: true});
             if (response.status === 200) {
                 setLoggedIn(true);
                 setAccessToken(response.data.access); 

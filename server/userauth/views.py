@@ -59,6 +59,8 @@ def register (request):
                 httponly=True,
                 samesite='Lax',
                 secure=False,
+                max_age=86400,
+                path='/'
             )
         return response
 
@@ -86,6 +88,8 @@ def Login_view (request):
                 httponly=True,
                 samesite='Lax',
                 secure=False,
+                max_age=86400,
+                path='/'
             )
         return response
         

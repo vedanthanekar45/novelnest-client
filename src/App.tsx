@@ -1,9 +1,7 @@
 import './App.css'
-import api from './auth/api'
 import React from 'react'
 import Login from './components/authentication/Login'
 import Register from './components/authentication/Register'
-// import GenrePage from './pages/genres'
 import Homepage from './pages/homepage'
 import {Routes, Route} from "react-router-dom"
 import { Navigate } from 'react-router-dom';
@@ -13,6 +11,7 @@ import CreateJournal from './components/journal/createJournal'
 import { useAuth } from './auth/useAuth'
 import Search from './pages/Search'
 import BookInfo from './pages/BookInfo'
+import axios from 'axios'
 
 function App() {
 
@@ -20,7 +19,7 @@ function App() {
   React.useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await api.get("/check-auth");
+        const res = await axios.get("http://127.0.0.1:8000/check-auth");
         setLoggedIn(true);
         setUser(res.data.user);
       } catch (err) {
