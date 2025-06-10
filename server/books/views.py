@@ -39,8 +39,6 @@ def get_book_details (book_id):
         return JsonResponse(response.json())
     else :
         JsonResponse({"error": "Book not found"}, status=404)
-
-
         return JsonResponse({
             "error": "Failed to get data from Google Books"
         }, status=500)
@@ -109,7 +107,6 @@ def count_book_logs (request):
         'currently_reading': currently_reading_count,
         'completed': completed_count,
     }, status=200)
-
 
 @api_view(['GET'])
 def get_book_details (request):
