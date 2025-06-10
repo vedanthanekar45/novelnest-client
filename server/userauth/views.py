@@ -52,7 +52,7 @@ def register (request):
         refresh = RefreshToken()
         access = str(refresh.access_token)
 
-        response = JsonResponse({"message": "Registration successful"})
+        response = JsonResponse({"message": "Registration successful", "access": access})
         response.set_cookie(
                 key='access_token',
                 value=access,
@@ -81,7 +81,7 @@ def Login_view (request):
         refresh = RefreshToken.for_user(user)
         access = str(refresh.access_token)
 
-        response = JsonResponse({"message": "Login successful"})
+        response = JsonResponse({"message": "Login successful", "access": access})
         response.set_cookie(
                 key='access_token',
                 value=access,

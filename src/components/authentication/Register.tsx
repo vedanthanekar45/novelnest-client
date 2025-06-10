@@ -40,8 +40,8 @@ function Register() {
 
             console.log(response.data)
             
-            const token = response.data.token;
-            localStorage.setItem('authtoken', token)
+            const token = response.data.access;
+            localStorage.setItem('token', token)
             if (response.status === 201 || response.status === 200) {
                 console.log('Registration successful:', response.data);
                 console.log("Token saved: ", token);

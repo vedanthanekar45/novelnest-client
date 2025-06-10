@@ -10,15 +10,17 @@ import bookcover11 from "/assets/tpodg.jpg"
 import bookcover12 from "/assets/demons.jpg"
 import bookcover21 from "/assets/ttbp.jpg"
 import bookcover22 from "/assets/1984.jpg"
+import { useAuth } from "../auth/useAuth.ts";
 
 export default function Homepage() {
 
+    const { loggedIn } = useAuth()
 
     return(
             <div className="flex flex-col items-center">
                 <Banner source="/assets/gallery10.jpg"/>
                 <Navbar className="flex absolute" /> 
-                <Welcome />
+                {loggedIn ? (<></>) : (<Welcome />)}
                 <Save 
                     bookcover1={bookcover11}
                     bookcover2={bookcover12}

@@ -6,7 +6,6 @@ import axios from "axios";
 
 function Login() {
     const navigate = useNavigate();
-    const { setAccessToken } = useAuth();
     const { loggedIn, setLoggedIn } = useAuth();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -19,7 +18,8 @@ function Login() {
             const response = await axios.post('http://127.0.0.1:8000/login/', {username, password}, {withCredentials: true});
             if (response.status === 200) {
                 setLoggedIn(true);
-                setAccessToken(response.data.access); 
+                localStorage.setItem("token", response.data.access)
+                // setAccessToken(response.data.access); 
                 navigate('/');
             }
             setLoggedIn(true);
