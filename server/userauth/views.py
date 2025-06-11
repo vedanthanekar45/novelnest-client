@@ -98,14 +98,13 @@ def Login_view (request):
 
 
 
-
 # Logout View
 class LogoutView (APIView):
     permission_classes = (IsAuthenticated, )
     def post (self, request):
         try:
             refresh_token = request.data["refresh"]
-            print(refresh_token)
+            # print(refresh_token)
             token = RefreshToken(refresh_token)
             print("Everything's happening great until now!")
             token.blacklist()

@@ -28,40 +28,11 @@ export const AuthProvider = ({ children }: any) => {
         if (token) setLoggedIn(true) 
         else setLoggedIn(false)
     }, [])
-
-    // useEffect(() => {
-    //     if (accessToken) {
-    //         axios.defaults.headers.common["Authorization"] = "Bearer" + accessToken;
-    //         localStorage.setItem('token', accessToken)
-    //     } else {
-    //         delete axios.defaults.headers.common["Authorization"];
-    //         localStorage.removeItem('token')
-    //     }
-    // }, [accessToken])
-
-    // useEffect(() => {
-    //     axios.get("http://127.0.0.1:8000/check-auth", {
-    //         withCredentials: true
-    //     }).then(() => {
-    //         setLoggedIn(true);
-    //         console.log("Authenticated!")
-    //     }).catch(() => {
-    //         setLoggedIn(false);
-    //         console.log("Not Authenticated!")
-    //     })
-    // }, [])
-
-    // const contextValue = useMemo(
-    //     () => ({
-    //         user, setUser, loggedIn, logout, setLoggedIn, accessToken, setToken
-    //     }),
-    //     [accessToken]
-    // )
     
     const logout = async () => {
         setUser(null)
-        await axios.post('http://127.0.0.1:8000/logout/', {}, { withCredentials: true });
-        setUser(null)
+        // await axios.post('http://127.0.0.1:8000/logout/', {}, { withCredentials: true });
+        localStorage.removeItem("token")
         setLoggedIn(false)
     }
 
