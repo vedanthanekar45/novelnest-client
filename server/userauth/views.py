@@ -98,22 +98,6 @@ def Login_view (request):
 
 
 
-# Logout View
-class LogoutView (APIView):
-    permission_classes = (IsAuthenticated, )
-    def post (self, request):
-        try:
-            refresh_token = request.data["refresh"]
-            # print(refresh_token)
-            token = RefreshToken(refresh_token)
-            print("Everything's happening great until now!")
-            token.blacklist()
-            return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def check_auth(request):
