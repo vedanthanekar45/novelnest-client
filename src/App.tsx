@@ -10,6 +10,7 @@ import JournalPage from './components/journal/journalPage'
 // import { useAuth } from './auth/useAuth'
 import Search from './pages/Search'
 import BookInfo from './pages/BookInfo'
+import { AuthProvider } from './auth/authContext'
 // import axios from 'axios'
 
 function App() {
@@ -27,19 +28,21 @@ function App() {
   //   };
   
   //   checkAuth();
-  // }, []);
+  // }, []);  
   
   return (
     <div>
-      <Routes>
-        <Route path='/' element={<Homepage />} />
-        <Route path='/signin' element={<Login/>} />
-        <Route path='/signup' element={<Register />} />
-        <Route path='/otp'  element={<Otpverify />} />
-        <Route path='/journal' element={<JournalPage />} />
-        <Route path='/searchbooks' element={<Search />} />
-        <Route path='/book/:id' element={<BookInfo />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path='/' element={<Homepage />} />
+          <Route path='/signin' element={<Login/>} />
+          <Route path='/signup' element={<Register />} />
+          <Route path='/otp'  element={<Otpverify />} />
+          <Route path='/journal' element={<JournalPage />} />
+          <Route path='/searchbooks' element={<Search />} />
+          <Route path='/book/:id' element={<BookInfo />} />
+        </Routes>
+      </AuthProvider>
     </div>
   )
 }

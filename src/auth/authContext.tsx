@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, useMemo} from 'react'
+import { createContext, useState, useEffect} from 'react'
 import axios from 'axios'
 
 interface User {
@@ -24,26 +24,32 @@ export const AuthProvider = ({ children }: any) => {
     const accessToken = localStorage.getItem("token");
 
     useEffect(() => {
-        if (accessToken) {
-            axios.defaults.headers.common["Authorization"] = "Bearer" + accessToken;
-            localStorage.setItem('token', accessToken)
-        } else {
-            delete axios.defaults.headers.common["Authorization"];
-            localStorage.removeItem('token')
-        }
-    }, [accessToken])
-
-    useEffect(() => {
-        axios.get("http://127.0.0.1:8000/check-auth", {
-            withCredentials: true
-        }).then(() => {
-            setLoggedIn(true);
-            console.log("Authenticated!")
-        }).catch(() => {
-            setLoggedIn(false);
-            console.log("Not Authenticated!")
-        })
+        const token = localStorage.getItem('token')
+        if (token) setLoggedIn(true) 
+        else setLoggedIn(false)
     }, [])
+
+    // useEffect(() => {
+    //     if (accessToken) {
+    //         axios.defaults.headers.common["Authorization"] = "Bearer" + accessToken;
+    //         localStorage.setItem('token', accessToken)
+    //     } else {
+    //         delete axios.defaults.headers.common["Authorization"];
+    //         localStorage.removeItem('token')
+    //     }
+    // }, [accessToken])
+
+    // useEffect(() => {
+    //     axios.get("http://127.0.0.1:8000/check-auth", {
+    //         withCredentials: true
+    //     }).then(() => {
+    //         setLoggedIn(true);
+    //         console.log("Authenticated!")
+    //     }).catch(() => {
+    //         setLoggedIn(false);
+    //         console.log("Not Authenticated!")
+    //     })
+    // }, [])
 
     // const contextValue = useMemo(
     //     () => ({
