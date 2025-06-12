@@ -52,7 +52,7 @@ export default function Search () {
 
     return (
         <div className="flex flex-col items-center">
-            <Banner source="/assets/coverBanners/search.jpg"/>
+            <Banner />
             <Navbar className="flex absolute" />
             <h1 className="text-5xl ml-[20px] mb-32 italic text-center text-white prata">
                 Search for your favourite books

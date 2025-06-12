@@ -18,7 +18,7 @@ export default function Homepage() {
 
     return(
             <div className="flex flex-col items-center">
-                <Banner source="/assets/gallery10.jpg"/>
+                <Banner />
                 <Navbar className="flex absolute" /> 
                 {loggedIn ? (<></>) : (<Welcome />)}
                 <Save 
