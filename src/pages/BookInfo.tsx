@@ -2,12 +2,12 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 type bookType = {
-  id: string;
+  id?: string;
   volumeInfo: {
-    title: string;
+    title?: string;
     authors?: string[];
     imageLinks?: {
-      thumbnail: string;
+      thumbnail?: string;
     };
     description?: string;
   };
@@ -15,22 +15,34 @@ type bookType = {
 
 export default function BookInfo() {
 
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const [book, setBook] = useState<bookType | null>(null);
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/bookinfo/${id}/`);
-        if (!response.ok) throw new Error("Failed to fetch book details");
+        setLoading(true)
+        const response = await fetch(`http://127.0.0.1:8000/get_book_data/?id=${id}/`);
+        console.log("Fetching book from:", `http://127.0.0.1:8000/bookinfo/${id}/`);
         const data = await response.json();
         setBook(data.items ? data.items[0] : data);
       } catch (error: any) {
         console.log(error.message);
+      } finally {
+        setLoading(false)
       }
     };
     fetchBookDetails();
   }, [id])
+
+  console.log(book)
+
+  if (loading) return <p className="text-white">Loading book...</p>;
+
+  if (!book || !book.volumeInfo) {
+    return <p className="text-white">Loading book info...</p>;
+  }
 
   return (
     <div className="text-white">
