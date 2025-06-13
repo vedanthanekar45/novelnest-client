@@ -1,4 +1,7 @@
 // This where we'll start, where the magic will begin
+
+import {useState, useEffect} from 'react'
+
 import Save from "../components/body/Save";
 import Navbar from "../components/navigation/Navbar";
 import Banner from "../components/homepage/Banner";
@@ -14,10 +17,18 @@ import { useAuth } from "../auth/useAuth.ts";
 
 export default function Homepage() {
 
-    const { loggedIn } = useAuth()
+      const [fadeIn, setFadeIn] = useState(false);
+    
+      useEffect(() => {
+        const timeout = setTimeout(() => {
+          setFadeIn(true)
+        }, 50);
+        return () => clearTimeout(timeout);
+      }, []);  
 
+    const { loggedIn } = useAuth()
     return(
-            <div className="flex flex-col items-center">
+            <div className={`flex flex-col items-center min-h-screen transition-opacity duration-300 ease-in ${fadeIn ? "opacity-100" : "opacity-0"}`}>
                 <Banner />
                 <Navbar className="flex absolute" /> 
                 {loggedIn ? (<></>) : (<Welcome />)}
