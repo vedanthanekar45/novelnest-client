@@ -5,17 +5,23 @@ import 'ldrs/react/Tailspin.css'
 
 import Footer from '../components/homepage/Footer'
 import Navbar from "../components/navigation/Navbar";
-import Banner from "../components/homepage/Banner";
+// import Banner from "../components/homepage/Banner";
 
 type bookType = {
   id?: string;
   volumeInfo: {
     title?: string;
+    subtitle?: string;
     authors?: string[];
+    categories?: string;
     imageLinks?: {
       thumbnail?: string;
     };
     description?: string;
+    publisher?: string;
+    publishedDate?: string;
+    pageCount?: number;
+    maturityRating?: string;
   };
 };
 
@@ -64,21 +70,52 @@ export default function BookInfo() {
   return (
     <div className={`${fadeIn ? "opacity-100" : "opacity-0"} flex flex-col items-center text-white
     min-h-screen transition-opacity duration-300 ease-in`}>
-      <Banner />
-      <Navbar className="flex absolute" />
+      {/* <Banner /> */}
+      <Navbar className="flex mb-20" />
       <div className="flex px-6 w-full max-w-5xl gap-10">
-        {book.volumeInfo?.imageLinks?.thumbnail && (
-          <img
-            className="w-[211px] h-[300px] object-cover shadow-lg rounded-md"
-            src={book.volumeInfo.imageLinks.thumbnail}
-            alt={book.volumeInfo.title}
-          />
-        )}
+        <div className="flex flex-col items-center ">
+          {book.volumeInfo?.imageLinks?.thumbnail && (
+            <img
+              className="w-[211px] h-[300px] object-cover shadow-lg rounded-md mb-8"
+              src={book.volumeInfo.imageLinks.thumbnail}
+              alt={book.volumeInfo.title}
+            />
+          )}
+          <div className="flex flex-col w-[211px]">
+            <button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
+            rounded-xl text-2xl h-10 shadow mb-4 border-5 border-[#0e660e]">
+              Mark as Read
+            </button>
+            <button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
+            rounded-xl text-2xl h-10 shadow mb-4">
+              Add to TBR
+            </button>
+            <button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
+            rounded-xl text-2xl h-10 shadow mb-4">
+              Add to Custom Shelf
+            </button>
+          </div>
+        </div>
 
         <div className="flex flex-col justify-start">
-          <h1 className="prata text-4xl font-medium mb-4">{book.volumeInfo?.title || "Untitled"}</h1>
-          <h3 className="prata text-xl text-gray-300 mb-16">{book.volumeInfo?.authors?.join(", ") || "Unknown Author"}</h3>
-          <div className="text-xl text-gray-200" dangerouslySetInnerHTML={{ __html: book.volumeInfo?.description || "No description available." }} />
+          <h1 className="prata text-4xl font-medium mb-6">{book.volumeInfo?.title || "Untitled"}</h1>
+          <h3 className="prata text-xl italic text-gray-400 mb-10">"{book.volumeInfo?.subtitle || "No subtitle"}"</h3>
+          <h3 className="prata text-xl mb-16">Author(s): {book.volumeInfo?.authors?.join(", ") || "Unknown Author"}</h3>
+
+          <h3 className="prata text-2xl mb-2">Description</h3>
+          <hr className='border-gray-700 mb-8'></hr>
+          <div className="text-xl text-gray-200 mb-20" dangerouslySetInnerHTML={{ __html: book.volumeInfo?.description || "No description available." }} />
+
+          <h3 className="prata text-2xl mb-2">Other Details</h3>
+          <hr className='border-gray-700 mb-4'></hr>
+          <div>
+            <ul className="text-xl">
+              <li>Publisher: {book.volumeInfo?.publisher}</li>
+              <li>Published Date: {book.volumeInfo?.publishedDate}</li>
+              <li>Page Count: {book.volumeInfo?.pageCount}</li>
+              <li>Maturity Rating: {book.volumeInfo?.maturityRating}</li>
+            </ul>
+          </div>
         </div>
       </div>
       <Footer />

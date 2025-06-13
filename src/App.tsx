@@ -2,7 +2,6 @@ import './App.css'
 import Login from './components/authentication/Login'
 import Register from './components/authentication/Register'
 import Homepage from './pages/homepage'
-import { useState, useEffect } from 'react'
 import { Routes, Route } from "react-router-dom"
 // import { Navigate } from 'react-router-dom';
 import Otpverify from './components/authentication/OtpVerify'
