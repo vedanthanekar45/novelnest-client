@@ -9,7 +9,7 @@ class bookLogData (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book_id = models.CharField(max_length=20)   # book_id comes from the Google Books API
     title = models.CharField(max_length=255)
-    thumbnail_url = models.URLField(default=list)
+    thumbnail_url = models.URLField(max_length=1000)
     status = models.CharField(choices = [
         ("to_be_read", "To Be Read"),
         ("currently_reading", "Currently Reading"),

@@ -129,6 +129,21 @@ def get_book_details (request):
     
 
 
+# New API, everyone. 
+# What was happpening? I marked a book as read, it works, I celebrate.
+# But when I revisit the page, to quote the creators of Game of Thrones, React 'kind of forgot' that the book has already been read.
+# So I think I need to check every single time the page loads, if the user has logged the book already or not.
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_book_read(request):
+    user = request.user
+    book_id = request.GET.get("id")
+    read = bookLogData.objects.filter(user=user, book_id=book_id).exists()
+    return JsonResponse({"read": read})
+
+
+
 # --------- USER SHELVES RELATED APIS -----------
 
 @api_view(['POST'])

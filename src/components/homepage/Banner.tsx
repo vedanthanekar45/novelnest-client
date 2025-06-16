@@ -4,7 +4,7 @@ import { useRef } from "react"
 import bannerExporter from "../../assets/randomizeBanner"
 
 // interface BannerProps {
-//     source: string
+//     className: string
 // };
 
 export default function Banner() {
@@ -13,7 +13,7 @@ export default function Banner() {
 
     return (
         <>
-            <div className="">
+            <div>
                 <img src={bannerPath} className="w-[1500px]"/>
             </div>
         </>

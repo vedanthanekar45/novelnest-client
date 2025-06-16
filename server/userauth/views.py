@@ -53,15 +53,15 @@ def register (request):
         access = str(refresh.access_token)
 
         response = JsonResponse({"message": "Registration successful", "access": access})
-        response.set_cookie(
-                key='access_token',
-                value=access,
-                httponly=True,
-                samesite='Lax',
-                secure=False,
-                max_age=86400,
-                path='/'
-            )
+        # response.set_cookie(
+        #         key='access_token',
+        #         value=access,
+        #         httponly=True,
+        #         samesite='Lax',
+        #         secure=False,
+        #         max_age=86400,
+        #         path='/'
+        #     )
         return response
 
     return Response({"error": "error doing this shit"}, status=status.HTTP_400_BAD_REQUEST)
@@ -82,15 +82,15 @@ def Login_view (request):
         access = str(refresh.access_token)
 
         response = JsonResponse({"message": "Login successful", "access": access})
-        response.set_cookie(
-                key='access_token',
-                value=access,
-                httponly=True,
-                samesite='Lax',
-                secure=False,
-                max_age=86400,
-                path='/'
-            )
+        # response.set_cookie(
+        #         key='access_token',
+        #         value=access,
+        #         httponly=True,
+        #         samesite='Lax',
+        #         secure=False,
+        #         max_age=86400,
+        #         path='/'
+        #     )
         return response
         
 

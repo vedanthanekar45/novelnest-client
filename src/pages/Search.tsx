@@ -87,7 +87,7 @@ export default function Search () {
                                             <p className="prata mt-2 text-xl text-gray-400 hover:underline">{book.volumeInfo.authors?.join(', ')}</p>
                                             <p className="prata mt-4 text-xl text-gray-400">{book.volumeInfo.publishedDate}</p>
                                             <p className="prata mt-4 text-xl text-gray-400">{book.volumeInfo.categories}</p>
-                                            <p className="prata mt-4 text-xl text-gray-400">{truncateText(book.volumeInfo.description || '', 95)}</p>
+                                            <p className="prata mt-4 text-xl text-gray-400">{truncateText(book.volumeInfo.description || '', 80)}</p>
                                         </div>
                                     </div>
                                 </Link>
