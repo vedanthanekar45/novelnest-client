@@ -17,9 +17,13 @@ export default function Navbar({className}: ClassNameProp) {
                 {
                     loggedIn ? (
                         <a><Link to="/signin" state={{ from: location.pathname }}><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
-                        ml-[300px] mt-[30px] text-[17px] trans" text="Account" /></Link></a>) : (
+                        ml-[300px] mt-[30px] text-[17px] trans" text="Account" /></Link></a>
+                        ) : (<>
                             <a href="/signin"><NavButtons className="text-white hover:text-[#24cf1e] prata font*
                             ml-[400px] mt-[30px] text-[17px] trans" text="Sign In" /></a>
+                             <a><Link to="/signup"><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
+                              ml-16 mt-[30px] text-[17px] trans" text="Register" /></Link></a>
+                            </>
                         )
                 }
                 {/* <a href="/signin"><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
