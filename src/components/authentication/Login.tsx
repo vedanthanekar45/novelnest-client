@@ -1,7 +1,7 @@
 import React from "react"
 import { useAuth } from "../../auth/useAuth";
 import LoadingDots from "../animations/LoadingDots";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
@@ -10,6 +10,8 @@ function Login() {
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [isLoading, setIsLoading] = React.useState(false);
+    const location = useLocation()
+
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -20,10 +22,10 @@ function Login() {
                 setLoggedIn(true);
                 localStorage.setItem("token", response.data.access)
                 // setAccessToken(response.data.access); 
-                navigate('/');
             }
             setLoggedIn(true);
-            navigate('/')
+            const from = location.state?.from || '/';
+            navigate(from)
         } catch (error) {
             setLoggedIn(false);         
             console.error('Login failed:', error);

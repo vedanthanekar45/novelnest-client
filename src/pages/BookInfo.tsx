@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useLocation } from 'react-router-dom'
 import { Tailspin } from 'ldrs/react'
 import 'ldrs/react/Tailspin.css'
 import axios from 'axios'
@@ -36,12 +36,13 @@ export default function BookInfo() {
   const [loading, setLoading] = useState(false)
   const [fadeIn, setFadeIn] = useState(false);
   const [read, setRead] = useState(false)
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const location = useLocation()
 
 
   const markAsRead = () => {
     if (!loggedIn) {
-      navigate('/signin');
+      navigate('/signin', {state: {from: location.pathname}})
     } else {
       const token = localStorage.getItem('token');
       axios.post("http://127.0.0.1:8000/log_book/", {
