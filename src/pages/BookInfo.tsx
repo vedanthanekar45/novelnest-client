@@ -141,7 +141,7 @@ export default function BookInfo() {
           )}
           <div className="flex flex-col w-[211px]">
 
-            {read ?
+            {read && loggedIn ?
               (<button className="prata bg-white text-[#0e660e] text-sm px-4 py-2 
               rounded-xl text-2xl h-10 shadow mb-4 border-5 border-[#0e660e]" onClick={markAsRead}>
                 Read
