@@ -5,7 +5,7 @@ import 'ldrs/react/Tailspin.css'
 import axios from 'axios'
 
 import Footer from '../components/homepage/Footer'
-import ShelvesPopup from '../components/popups/ShelvesPopup'
+import ShelvesPopup from '../components/modals/ShelvesPopup'
 import Navbar from "../components/navigation/Navbar";
 import { useAuth } from '../auth/useAuth'
 
