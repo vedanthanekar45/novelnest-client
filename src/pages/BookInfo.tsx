@@ -5,6 +5,7 @@ import 'ldrs/react/Tailspin.css'
 import axios from 'axios'
 
 import Footer from '../components/homepage/Footer'
+import ShelvesPopup from '../components/popups/ShelvesPopup'
 import Navbar from "../components/navigation/Navbar";
 import { useAuth } from '../auth/useAuth'
 
@@ -36,6 +37,7 @@ export default function BookInfo() {
   const [loading, setLoading] = useState(false)
   const [fadeIn, setFadeIn] = useState(false);
   const [read, setRead] = useState(false)
+  const [showShelvesPopup, setShowShelvesPopup] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -125,6 +127,9 @@ export default function BookInfo() {
     );
   }
 
+
+
+
   return (
     <div className={`${fadeIn ? "opacity-100" : "opacity-0"} flex flex-col items-center text-white
     min-h-screen transition-opacity duration-300 ease-in`}>
@@ -152,14 +157,14 @@ export default function BookInfo() {
               </button>)
             }
 
-
+            <ShelvesPopup isOpen={showShelvesPopup} onClose={() => setShowShelvesPopup(false)} />
 
             <button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
             rounded-xl text-2xl h-10 shadow mb-4">
               Add to TBR
             </button>
             <button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
-            rounded-xl text-2xl h-10 shadow mb-4">
+            rounded-xl text-2xl h-10 shadow mb-4" onClick={() => setShowShelvesPopup(true)}>
               Add to Custom Shelf
             </button>
           </div>
