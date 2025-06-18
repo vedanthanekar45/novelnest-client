@@ -10,9 +10,10 @@ export default function CreateShelf ({ isOpen, onClose }: createShelfModalProps)
 
     return (
         <div>
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 backdrop-blur-sm z-40 duration-300 transition-opacity duration-300 ease-in-out opacity-100">
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-opacity-50 backdrop-blur-sm backdrop-brightness-50
+            z-40 duration-300 transition-opacity duration-300 ease-in-out opacity-100">
                 <div className="bg-[#1c1c1c] rounded-lg shadow-lg p-6 w-full max-w-md relative">
-                    <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
+                    <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-800 text-xl">
                         ✕
                     </button>
                     <h2 className="text-2xl prata mb-2">Choose a Shelf</h2>

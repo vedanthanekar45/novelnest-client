@@ -17,6 +17,7 @@ urlpatterns = [
     path('check_book_read/', views.check_book_read, name="check_book_read"),
 
     # user shelf related paths
+    path('get_user_shelves', views.get_user_shelves, name="get_user_shelves"),
     path('create_shelf/', views.create_shelf, name="create_shelf"),
     path('add_book_to_shelf/', views.add_book_to_shelf, name="add_book_to_shelf"),
 ]

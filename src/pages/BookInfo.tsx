@@ -37,6 +37,7 @@ export default function BookInfo() {
   const [loading, setLoading] = useState(false)
   const [fadeIn, setFadeIn] = useState(false);
   const [read, setRead] = useState(false)
+  const [tbr, setTBR] = useState(false)
   const [showShelvesPopup, setShowShelvesPopup] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
@@ -61,6 +62,32 @@ export default function BookInfo() {
         if (response.status === 200) {
           console.log("Successful");
           setRead(true);
+        }
+      }).catch(error => {
+        console.log("Error:", error);
+      });
+    }
+  };
+
+  const markAsTBR = () => {
+    if (!loggedIn) {
+      navigate('/signin', {state: {from: location.pathname}})
+    } else {
+      const token = localStorage.getItem('token');
+      axios.post("http://127.0.0.1:8000/log_book/", {
+        "google_book_id": id,
+        "title": book?.volumeInfo.title,
+        "thumbnail_url": book?.volumeInfo.imageLinks?.smallThumbnail,
+        "status": "to_be_read"
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        }
+      }).then(response => {
+        if (response.status === 200) {
+          console.log("Successful");
+          setTBR(true);
         }
       }).catch(error => {
         console.log("Error:", error);
@@ -148,7 +175,7 @@ export default function BookInfo() {
 
             {read && loggedIn ?
               (<button className="prata bg-white text-[#0e660e] text-sm px-4 py-2 
-              rounded-xl text-2xl h-10 shadow mb-4 border-5 border-[#0e660e]" onClick={markAsRead}>
+              rounded-xl text-2xl h-10 shadow mb-4 border-5 border-[#0e660e]">
                 Read
               </button>) :
               (<button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
@@ -159,10 +186,16 @@ export default function BookInfo() {
 
             <ShelvesPopup isOpen={showShelvesPopup} onClose={() => setShowShelvesPopup(false)} />
 
-            <button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
-            rounded-xl text-2xl h-10 shadow mb-4">
-              Add to TBR
-            </button>
+            {tbr && loggedIn ?
+              (<button className="prata bg-white text-[#0e660e] text-sm px-4 py-2 
+              rounded-xl text-2xl h-10 shadow mb-4 border-5 border-[#0e660e]">
+                Added
+              </button>) :
+              (<button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
+            rounded-xl text-2xl h-10 shadow mb-4 border-5 border-[#0e660e]" onClick={markAsTBR}>
+                Add to TBR
+              </button>)
+            }
             <button className="prata bg-[#0e660e] hover:bg-white text-white hover:text-[#0e660e] duration-500 text-sm px-4 py-2 
             rounded-xl text-2xl h-10 shadow mb-4" onClick={() => setShowShelvesPopup(true)}>
               Add to Custom Shelf

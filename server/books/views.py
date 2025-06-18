@@ -156,7 +156,8 @@ def get_user_shelves (request):
     shelves = userShelf.objects.filter(user=user)
 
     shelf_data = [{
-        'title': shelf.title,
+        'id': shelf.id,
+        'title': shelf.shelfTitle,
     } for shelf in shelves]
     
     return JsonResponse({'shelves': shelf_data}, status=200)
