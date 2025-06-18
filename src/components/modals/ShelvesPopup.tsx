@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/useAuth";
 import { useNavigate, useLocation } from "react-router-dom";
+import CreateShelf from "./createShelf";
 
 type ModalProps = {
     isOpen: boolean;
@@ -13,6 +14,7 @@ export default function ShelvesPopup({ isOpen, onClose }: ModalProps) {
     const navigate = useNavigate()
     const location = useLocation()
     const { loggedIn } = useAuth()
+    const [showNewShelfPopup, setShowNewShelfPopup] = useState(false)
 
     useEffect(() => {
         if (!loggedIn) navigate('/signin', { state: { from: location.pathname } })
@@ -25,13 +27,22 @@ export default function ShelvesPopup({ isOpen, onClose }: ModalProps) {
                     <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-800">
                         ✕
                     </button>
-                    <h2 className="text-2xl prata mb-2">Choose a Shelf</h2>
-                    <hr className="mb-10 border-gray-700"></hr>
+                    <h2 className="text-2xl prata mb-10">Choose a Shelf</h2>
                     <form>
+                        <hr className="mb-4 border-gray-700"></hr>
                         <div className="flex justify-between items-center w-full">
-                            <label className="text-xl">Remember Me</label>
+                            <label className="text-xl prata pl-2">Remember Me</label>
                             <input type="checkbox" className="form-checkbox h-5 w-5 text-green-600" />
                         </div>
+                        <hr className=" mt-4 border-gray-700"></hr>
+                        <a onClick={() => setShowNewShelfPopup(true)}><div className="hover:bg-[#3c3c3c] py-4 pl-2">
+                            <h2 className="prata text-xl">Create a new shelf +  </h2>
+                        </div></a>
+
+                        <CreateShelf isOpen={showNewShelfPopup} onClose={() => setShowNewShelfPopup(false)}/>
+
+                        <hr className="mb-4 border-gray-700"></hr>
+
                         <button className="w-full h-10 bg-green-700 text-white mt-10 prata rounded-lg">Add</button>
                     </form>
                     {/* <form>
