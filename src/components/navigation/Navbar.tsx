@@ -29,8 +29,6 @@ export default function Navbar({className}: ClassNameProp) {
                 {/* <a href="/signin"><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
                 ml-[300px] mt-[30px] text-[17px] trans" text="Sign In" /></a> */}
                 <a href="#"><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
-                ml-16 mt-[30px] text-[17px] trans" text="Library" /></a>
-                <a href="#"><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
                 ml-16 mt-[30px] text-[17px] trans" text="Shelves" /></a>
                 <a href="#"><NavButtons className="text-white hover:text-[#24cf1e] prata font-medium 
                 ml-16 mt-[30px] text-[17px] trans" text="Journal" /></a>
