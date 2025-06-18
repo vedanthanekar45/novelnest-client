@@ -45,13 +45,6 @@ export default function ShelvesPopup({ isOpen, onClose }: ModalProps) {
 
                         <button className="w-full h-10 bg-green-700 text-white mt-10 prata rounded-lg">Add</button>
                     </form>
-                    {/* <form>
-                        <input type="text" placeholder="Username" className="block mb-2" />
-                        <input type="password" placeholder="Password" className="block mb-4" />
-                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
-                            Log In
-                        </button>
-                    </form> */}
                 </div>
             </div>
         </div>

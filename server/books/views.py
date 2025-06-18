@@ -146,6 +146,23 @@ def check_book_read(request):
 
 # --------- USER SHELVES RELATED APIS -----------
 
+
+# Get every single shelf created by a particular user
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_shelves (request):
+    user = request.user
+    shelves = userShelf.objects.filter(user=user)
+
+    shelf_data = [{
+        'title': shelf.title,
+    } for shelf in shelves]
+    
+    return JsonResponse({'shelves': shelf_data}, status=200)
+
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_shelf (request):
