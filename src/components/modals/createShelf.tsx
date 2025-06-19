@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useState } from "react";
-import toast from "react-hot-toast";
 
 type createShelfModalProps = {
     isOpen: boolean;
@@ -28,7 +27,7 @@ export default function CreateShelf({ isOpen, onClose }: createShelfModalProps) 
                 }
             });
             console.log('Shelf created: ', response.data.message)
-            toast.success("Shelf successfully created!")
+            alert("Shelf successfully created!")
         } catch (error) {
             console.log(error)
         }

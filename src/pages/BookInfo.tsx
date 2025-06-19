@@ -184,7 +184,7 @@ export default function BookInfo() {
               </button>)
             }
 
-            <ShelvesPopup isOpen={showShelvesPopup} onClose={() => setShowShelvesPopup(false)} />
+            <ShelvesPopup isOpen={showShelvesPopup} bookId={book.id} onClose={() => setShowShelvesPopup(false)} />
 
             {tbr && loggedIn ?
               (<button className="prata bg-white text-[#0e660e] text-sm px-4 py-2 
