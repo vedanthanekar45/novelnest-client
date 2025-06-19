@@ -36,7 +36,6 @@ export default function ShelvesPopup({ isOpen, onClose }: ModalProps) {
             },
         })
             .then((res) => {
-                console.log(res.data.shelves);
                 setShelves(res.data.shelves);
                 setLoading(false);
             })
@@ -62,12 +61,8 @@ export default function ShelvesPopup({ isOpen, onClose }: ModalProps) {
                                 <hr className="mb-4 mt-4 border-gray-700"></hr>
                                 {loading ? (
                                     <Tailspin
-                                        size="40"
-                                        stroke="5"
-                                        speed="0.9"
-                                        color="black"
+                                        size="40" stroke="5" speed="0.9" color="black"
                                     />
-
                                 ) : (
                                     <div key={shelves.id} className="flex justify-between items-center w-full">
                                         <label className="text-xl prata pl-2">{shelves.title}</label>
@@ -81,10 +76,11 @@ export default function ShelvesPopup({ isOpen, onClose }: ModalProps) {
                         <a onClick={() => setShowNewShelfPopup(true)} href="#"><div className="hover:bg-[#3c3c3c] py-4 pl-2">
                             <h2 className="prata text-xl">Create a new shelf +  </h2>
                         </div></a>
-                        <CreateShelf isOpen={showNewShelfPopup} onClose={() => setShowNewShelfPopup(false)} />
                         <hr className="mb-4 border-gray-700"></hr>
                         <button className="w-full h-10 bg-green-700 text-white mt-10 prata rounded-lg">Add</button>
                     </form>
+                    
+                    <CreateShelf isOpen={showNewShelfPopup} onClose={() => setShowNewShelfPopup(false)} />
 
                 </div>
             </div>
